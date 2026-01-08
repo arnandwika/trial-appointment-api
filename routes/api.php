@@ -18,4 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('packages', 'PackagesController@index');
+Route::get('/packages', [PackagesController::class, 'index']);
