@@ -12,7 +12,7 @@ class PackagesController extends Controller
      */
     public function index()
     {
-        //
+        return Packages::get();
     }
 
     /**
