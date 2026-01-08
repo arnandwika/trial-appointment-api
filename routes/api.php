@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/packages', [PackagesController::class, 'index']);
+
+Route::post('/packages/insertpackages', [PackagesController::class, 'store']);
