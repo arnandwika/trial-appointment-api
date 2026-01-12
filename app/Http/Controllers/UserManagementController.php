@@ -49,7 +49,7 @@ class UserManagementController extends Controller
         'password' => Hash::make($validated['password']),
         'is_active' => $validated['is_active'] ?? true,
     ]);
-
+    $userManagement->refresh();
     return response()->json([
         'message' => 'User berhasil dibuat',
         'data' => $user,
