@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PackagesController;
+use App\Http\Controllers\UserManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/packages', [PackagesController::class, 'index']);
 
 Route::post('/packages/insertpackages', [PackagesController::class, 'store']);
+Route::apiResource('user-management', UserManagementController::class);
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [UserManagementController::class, 'login']);
+    Route::post('/logout', [UserManagementController::class, 'logout'])
+        ->middleware('auth:sanctum');
+});
