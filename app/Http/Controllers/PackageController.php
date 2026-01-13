@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Packages;
+use App\Models\Package;
 use Illuminate\Http\Request;
 
-class PackagesController extends ApiController
+class PackageController extends ApiController
 {
     public function index()
     {
         return $this->success(
-            Packages::all()
+            Package::all()
         );
     }
 
@@ -24,17 +24,16 @@ class PackagesController extends ApiController
             'price' => 'required|numeric|min:0'
         ]);
 
-        $packages = Packages::create($data);
-
-        return $this->success($packages, 'Packages Created Successfuly', 201);
+        $package = Package::create($data);
+        return $this->success($package, 'Package Created Successfuly', 201);
     }
 
-    public function show(Packages $packages)
+    public function show(Package $package)
     {
-        return $this->success($packages);
+        return $this->success($package);
     }
 
-    public function update(Request $request, Packages $packages)
+    public function update(Request $request, Package $package)
     {
         $data = $request->validate([
             'class_id' => 'sometimes|integer',
@@ -45,14 +44,13 @@ class PackagesController extends ApiController
             'is_active' => 'sometimes|boolean'
         ]);
 
-        $packages->update($data);
-
-        return $this->success($packages, 'Packages Updated Successfully', 200);
+        $package->update($data);
+        return $this->success($package, 'Package Updated Successfully', 200);
     }
 
-    public function destroy(Packages $packages)
+    public function destroy(Package $package)
     {
-        $packages->update(['is_active' => false]);
+        $package->update(['is_active' => false]);
         return response()->noContent();
     }
 }

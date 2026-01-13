@@ -23,7 +23,6 @@ class CourseClassController extends ApiController
         ]);
 
         $class = CourseClass::create($data);
-
         return $this->success($class, 'Class Created Successfuly', 201);
     }
 
@@ -42,7 +41,6 @@ class CourseClassController extends ApiController
         ]);
 
         $class->update($data);
-
         return $this->success($class, 'Class Updated Successfully', 204);
     }
 

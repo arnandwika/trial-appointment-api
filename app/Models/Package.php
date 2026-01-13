@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
-class Packages extends Model
+class Package extends Model
 {
     use HasFactory;
 

@@ -25,7 +25,6 @@ class TrainerController extends ApiController
         ]);
 
         $trainer = Trainer::create($data);
-
         return $this->success($trainer, 'Trainer Created Successfuly', 201);
     }
 
@@ -46,7 +45,6 @@ class TrainerController extends ApiController
         ]);
 
         $trainer->update($data);
-
         return $this->success($trainer, 'Trainer Updated Successfully', 200);
     }
 

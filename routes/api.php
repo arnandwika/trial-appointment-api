@@ -3,8 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\PackagesController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\CourseClassController;
+use App\Http\Controllers\TrainerController;
 
 //LOGIN
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -19,6 +21,6 @@ Route::prefix('auth')->group(function () {
 
 //API's
 Route::apiResource('user-management', UserManagementController::class);
-Route::apiResource('packages', PackagesController::class);
+Route::apiResource('package', PackageController::class);
 Route::apiResource('course-class', CourseClassController::class);
 Route::apiResource('trainer', TrainerController::class);
