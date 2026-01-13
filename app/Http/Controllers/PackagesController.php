@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Packages;
 use Illuminate\Http\Request;
 
-Packages PackagesController extends ApiController
+class PackagesController extends ApiController
 {
     public function index()
     {
