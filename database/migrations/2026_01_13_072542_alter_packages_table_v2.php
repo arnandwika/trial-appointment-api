@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('packages', function (Blueprint $table) {
             $table->integer('class_id');
-            $table->boolean('is_active')->default(true);
         });
     }
 
@@ -23,6 +22,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropColumn('class_id');
-        Schema::dropColumn('is_active');
     }
 };
