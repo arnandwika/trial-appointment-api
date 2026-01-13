@@ -20,7 +20,7 @@ class CourseClass extends Model
     protected $fillable = [
         'name',
         'image_url',
-        'desc',
+        'description',
         'is_active'
     ];
 

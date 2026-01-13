@@ -22,31 +22,31 @@ class CourseClassController extends ApiController
             'description' => 'required|string'
         ]);
 
-        $class = CourseClass::create($data);
-        return $this->success($class, 'Class Created Successfuly', 201);
+        $courseClass = CourseClass::create($data);
+        return $this->success($courseClass, 'Class Created Successfuly', 201);
     }
 
-    public function show(CourseClass $class)
+    public function show(CourseClass $courseClass)
     {
-        return $this->success($class);
+        return $this->success($courseClass);
     }
 
-    public function update(Request $request, CourseClass $class)
+    public function update(Request $request, CourseClass $courseClass)
     {
         $data = $request->validate([
             'name' => 'sometimes|string',
-            'image_url' => 'sometimes|numeric',
-            'description' => 'sometimes|integer',
+            'image_url' => 'sometimes|string',
+            'description' => 'sometimes|string',
             'is_active' => 'sometimes|boolean'
         ]);
-
-        $class->update($data);
-        return $this->success($class, 'Class Updated Successfully', 204);
+        
+        $courseClass->update($data);
+        return $this->success($courseClass, 'Class Updated Successfully', 200);
     }
 
-    public function destroy(CourseClass $class)
+    public function destroy(CourseClass $courseClass)
     {
-        $class->update(['is_active' => false]);
+        $courseClass->update(['is_active' => false]);
         return response()->noContent();
     }
 }

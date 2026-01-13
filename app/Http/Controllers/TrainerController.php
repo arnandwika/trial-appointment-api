@@ -21,7 +21,7 @@ class TrainerController extends ApiController
             'name' => 'required|string',
             'phone_number' => 'required|string',
             'email' => 'required|string',
-            'gender' => 'required|string'
+            'gender' => 'required|in:male,female',
         ]);
 
         $trainer = Trainer::create($data);
@@ -40,7 +40,7 @@ class TrainerController extends ApiController
             'name' => 'sometimes|string',
             'phone_number' => 'sometimes|string',
             'email' => 'sometimes|string',
-            'gender' => 'sometimes|string'
+            'gender' => 'sometimes|in:male,female',
             'is_active' => 'sometimes|boolean'
         ]);
 
