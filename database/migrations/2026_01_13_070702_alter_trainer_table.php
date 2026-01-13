@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('packages', function (Blueprint $table) {
-            $table->id();
-            $table->integer('class_id');
-            $table->string('name');
-            $table->string('desc');
-            $table->string('quota');
-            $table->string('price');
-            $table->timestamps();
+        Schema::table('trainers', function (Blueprint $table) {
+            $table->string('phone_number');
+            $table->string('gender');
+            $table->boolean('is_active')->default(true);
         });
     }
 
@@ -27,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('packages');
+        Schema::dropColumn('phone_number');
+        Schema::dropColumn('gender');
+        Schema::dropColumn('is_active');
     }
 };

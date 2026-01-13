@@ -11,13 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trainers', function (Blueprint $table) {
-            $table->id();
-            $table->integer('class_id');
-            $table->string('name');
-            $table->string('email');
-            $table->timestamps();
-        });
+        //
     }
 
     /**
@@ -25,6 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trainers');
+        //
     }
 };
