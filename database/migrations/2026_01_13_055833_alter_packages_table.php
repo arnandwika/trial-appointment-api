@@ -11,7 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::table('packages', function (Blueprint $table) {
+            $table->boolean('is_active')->default(true);
+        });
     }
 
     /**
@@ -19,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropColumn('is_active');
     }
 };
