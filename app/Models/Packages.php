@@ -20,8 +20,8 @@ class Packages extends Model
 
     protected $fillable = [
         'class_id',
-        'name',
-        'desc',
+        'title',
+        'description',
         'quota',
         'price',
         'is_active'

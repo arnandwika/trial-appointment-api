@@ -18,8 +18,8 @@ class PackagesController extends ApiController
     {
         $data = $request->validate([
             'class_id' => 'required|integer',
-            'name' => 'required|string',
-            'desc' => 'required|string',
+            'title' => 'required|string',
+            'description' => 'required|string',
             'quota' => 'required|integer',
             'price' => 'required|numeric|min:0'
         ]);
@@ -38,8 +38,8 @@ class PackagesController extends ApiController
     {
         $data = $request->validate([
             'class_id' => 'sometimes|integer',
-            'name' => 'sometimes|string',
-            'desc' => 'sometimes|string',
+            'title' => 'sometimes|string',
+            'description' => 'sometimes|string',
             'quota' => 'sometimes|integer',
             'price' => 'sometimes|numeric|min:0',
             'is_active' => 'sometimes|boolean'
