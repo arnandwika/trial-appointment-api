@@ -17,4 +17,16 @@ class ApiController extends Controller
             'data' => $data
         ], $status);
     }
+
+    protected function error(
+    string $message = 'Bad Request',
+    mixed $errors = null
+): JsonResponse {
+    return response()->json([
+        'success' => false,
+        'message' => $message,
+        'errors' => $errors
+    ], 400);
+}
+    
 }
