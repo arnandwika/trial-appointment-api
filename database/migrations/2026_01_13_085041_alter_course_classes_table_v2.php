@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('course_classes', function (Blueprint $table) {
-            $table->string('name');
-            $table->string('image_url');
-            $table->boolean('is_active')->default(true);
+            $table->renameColumn('desc', 'description');
         });
     }
 
@@ -23,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropColumn('name');
-        Schema::dropColumn('image_url');
-        Schema::dropColumn('is_active');
+        Schema::table('course_classes', function (Blueprint $table) {
+            $table->renameColumn('description', 'desc');
+        });
     }
 };
