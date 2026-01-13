@@ -17,10 +17,9 @@ class CourseClassController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'class_type' => 'required|string',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'trainer_id' => 'required|integer'
+            'name' => 'required|string',
+            'image_url' => 'nullable|string',
+            'desc' => 'required|string'
         ]);
 
         $class = CourseClass::create($data);
@@ -36,10 +35,10 @@ class CourseClassController extends Controller
     public function update(Request $request, CourseClass $class)
     {
         $data = $request->validate([
-            'class_type' => 'sometimes|string',
-            'description' => 'nullable|string',
-            'price' => 'sometimes|numeric',
-            'trainer_id' => 'sometimes|integer'
+            'name' => 'sometimes|string',
+            'image_url' => 'sometimes|numeric',
+            'desc' => 'sometimes|integer',
+            'is_active' => 'sometimes|boolean'
         ]);
 
         $class->update($data);
@@ -49,8 +48,7 @@ class CourseClassController extends Controller
 
     public function destroy(CourseClass $class)
     {
-        $class->delete();
-
-        return $this->success(null, 'Class Deleted Successfully', 204);
+        $class->update(['is_active' => false]);
+        return response()->noContent();
     }
 }

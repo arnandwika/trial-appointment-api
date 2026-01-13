@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('trainers', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->integer('class_id');
             $table->string('name');
-            
+            $table->string('phone_number');
+            $table->string('email');
+            $table->string('gender');
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
         });
     }
 

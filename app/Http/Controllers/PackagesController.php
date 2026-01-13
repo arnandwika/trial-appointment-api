@@ -5,61 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\Packages;
 use Illuminate\Http\Request;
 
-class PackagesController extends Controller
+Packages PackagesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return Packages::get();
+        return $this->success(
+            Packages::all()
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'class_id' => 'required|integer',
+            'name' => 'required|string',
+            'desc' => 'required|string',
+            'quota' => 'required|integer',
+            'price' => 'required|numeric|min:0'
+        ]);
+
+        $packages = Packages::create($data);
+
+        return $this->success($packages, 'Packages Created Successfuly', 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Packages $packages)
     {
-        //
+        return $this->success($packages);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Packages $packages)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Packages $packages)
     {
-        //
+        $data = $request->validate([
+            'class_id' => 'sometimes|integer',
+            'name' => 'sometimes|string',
+            'desc' => 'sometimes|string',
+            'quota' => 'sometimes|integer',
+            'price' => 'sometimes|numeric|min:0',
+            'is_active' => 'sometimes|boolean'
+        ]);
+
+        $packages->update($data);
+
+        return $this->success($packages, 'Packages Updated Successfully', 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Packages $packages)
     {
-        //
+        $packages->update(['is_active' => false]);
+        return response()->noContent();
     }
 }

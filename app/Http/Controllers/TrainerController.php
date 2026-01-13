@@ -7,59 +7,52 @@ use Illuminate\Http\Request;
 
 class TrainerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return $this->success(
+            Trainer::all()
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'class_id' => 'required|integer',
+            'name' => 'required|string',
+            'phone_number' => 'required|string',
+            'email' => 'required|string',
+            'gender' => 'required|string'
+        ]);
+
+        $trainer = Trainer::create($data);
+
+        return $this->success($trainer, 'Trainer Created Successfuly', 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Trainer $trainer)
     {
-        //
+        return $this->success($trainer);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Trainer $trainer)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Trainer $trainer)
     {
-        //
+        $data = $request->validate([
+            'class_id' => 'sometimes|integer',
+            'name' => 'sometimes|string',
+            'phone_number' => 'sometimes|string',
+            'email' => 'sometimes|string',
+            'gender' => 'sometimes|string'
+            'is_active' => 'sometimes|boolean'
+        ]);
+
+        $trainer->update($data);
+
+        return $this->success($trainer, 'Trainer Updated Successfully', 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Trainer $trainer)
     {
-        //
+        $trainer->update(['is_active' => false]);
+        return response()->noContent();
     }
 }
