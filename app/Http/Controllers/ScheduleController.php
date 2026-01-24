@@ -17,8 +17,8 @@ class ScheduleController extends ApiController
     public function store(Request $request)
     {
         $data = $request->validate([
-            'class_id' => 'required|integer',
-            'trainer_id' => 'required|integer',
+            'class_id' => 'required|integer|exists:classes,id',
+            'trainer_id' => 'required|integer|exists:trainers,id',
             'datetime_schedule' => 'required|date'
         ]);
 
@@ -34,11 +34,15 @@ class ScheduleController extends ApiController
     public function update(Request $request, Schedule $schedule)
     {
         $data = $request->validate([
-            'class_id' => 'sometimes|integer',
-            'trainer_id' => 'sometimes|integer',
+            'class_id' => 'sometimes|integer|exists:course_classes,id',
+            'trainer_id' => 'sometimes|integer|exists:trainers,id',
             'datetime_schedule' => 'sometimes|date',
             'is_active' => 'sometimes|boolean'
         ]);
+
+        if (empty($data)) {
+            return $this->error(null, 'No Schedule to update', 422);
+        }
 
         $schedule->update($data);
         return $this->success($schedule, 'Schedule Updated Successfully', 200);

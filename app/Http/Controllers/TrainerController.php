@@ -36,14 +36,18 @@ class TrainerController extends ApiController
     public function update(Request $request, Trainer $trainer)
     {
         $data = $request->validate([
-            'class_id' => 'sometimes|integer',
+            'class_id' => 'sometimes|integer|exists:course_classes,id',
             'name' => 'sometimes|string',
             'phone_number' => 'sometimes|string',
             'email' => 'sometimes|string',
             'gender' => 'sometimes|in:male,female',
             'is_active' => 'sometimes|boolean'
         ]);
-
+        
+        if (empty($data)) {
+            return $this->error(null, 'No Trainer to update', 422);
+        }
+        
         $trainer->update($data);
         return $this->success($trainer, 'Trainer Updated Successfully', 200);
     }
