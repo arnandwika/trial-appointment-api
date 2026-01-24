@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class CourseClass extends Model
+class Schedule extends Model
 {
     use HasFactory;
 
@@ -18,10 +17,9 @@ class CourseClass extends Model
     }
 
     protected $fillable = [
-        'name',
-        'image_url',
-        'description',
-        'class_capacity',
+        'class_id',
+        'trainer_id',
+        'datetime_schedule',
         'is_active'
     ];
 

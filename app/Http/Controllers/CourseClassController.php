@@ -19,7 +19,8 @@ class CourseClassController extends ApiController
         $data = $request->validate([
             'name' => 'required|string',
             'image_url' => 'nullable|string',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'class_capacity' => 'required|integer'
         ]);
 
         $courseClass = CourseClass::create($data);
@@ -37,6 +38,7 @@ class CourseClassController extends ApiController
             'name' => 'sometimes|string',
             'image_url' => 'sometimes|string',
             'description' => 'sometimes|string',
+            'class_capacity' => 'sometimes|integer'
             'is_active' => 'sometimes|boolean'
         ]);
         
