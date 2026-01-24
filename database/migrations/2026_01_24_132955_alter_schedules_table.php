@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('schedules', function (Blueprint $table) {
+            $table->integer('class_id');
+            $table->integer('trainer_id');
+            $table->dateTime('datetime_schedule');
+            $table->boolean('is_active')->default(true);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropColumn('class_id');
+        Schema::dropColumn('trainer_id');
+        Schema::dropColumn('datetime_schedule');
+        Schema::dropColumn('is_active');
+    }
+};
