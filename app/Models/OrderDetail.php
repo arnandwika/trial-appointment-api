@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
 
 class OrderDetail extends Model
 {
     use HasFactory;
+
     protected $table = 'order_details';
+
+    public $timestamps = false; // ⚠️ penting kalau tabel gak punya timestamps
 
     protected $fillable = [
         'order_id',
@@ -27,11 +31,8 @@ class OrderDetail extends Model
         'used_quota'      => 'integer',
     ];
 
-    /**
-     * Relasi ke Order
-     */
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }

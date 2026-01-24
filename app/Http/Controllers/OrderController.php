@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class OrderController extends Controller
+class OrderController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +20,16 @@ class OrderController extends Controller
     public function create()
     {
         
-    try {
+   
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+         DB::beginTransaction();
+         try {
         // Generate Order No
         $orderNo = $this->generateOrderNo();
 
@@ -65,20 +76,37 @@ class OrderController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(Order $order)
-    {
-        //
+   public function myTransaction($userId)
+{
+    try {
+        $orders = Order::with('orderDetails')
+            ->where('user_id', $userId)
+            ->orderBy('order_date', 'desc')
+            ->get();
+
+        if ($orders->isEmpty()) {
+            return $this->error(
+                'Transaksi tidak ditemukan',
+                404
+            );
+        }
+
+        return $this->success(
+            $orders,
+            'Berhasil mengambil transaksi',
+            200
+        );
+
+    } catch (\Exception $e) {
+        return $this->error(
+            $e->getMessage(),
+            500
+        );
     }
+}
+
 
     /**
      * Show the form for editing the specified resource.
