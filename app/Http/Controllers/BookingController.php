@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -14,7 +15,7 @@ class BookingController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function store(Request $request, OrderDetail $orderDetail, Schedule $schedule)
     {
         $data = $request->validate([
             'user_id' => 'required|integer',
@@ -26,7 +27,39 @@ class BookingController extends Controller
             'status' => 'required|string'
         ]);
 
-        $booking = Booking::create($data);
+        DB::transaction(function () use ($data, &$booking) {
+            //check + lock the order detail & schedule first
+            $orderDetail = DB::table('order_details')
+                ->where('id', $data['order_detail_id'])
+                ->lockForUpdate()
+                ->first();
+
+            if ($orderDetail->used_quota >= $orderDetail->total_quota) {
+                abort(422, 'Quota exhausted');
+            }
+
+            $schedule = DB::table('schedules')
+                ->where('id', $data['schedule_id'])
+                ->lockForUpdate()
+                ->first();
+
+            if ($schedule->used_capacity >= $schedule->capacity) {
+                abort(422, 'Schedule is full');
+            }
+
+            //insert the booking
+            $booking = Booking::create($data);
+
+            //update the increment counters
+            DB::table('order_details')
+                ->where('id', $data['order_detail_id'])
+                ->increment('used_quota', 1);
+
+            DB::table('schedules')
+                ->where('id', $data['schedule_id'])
+                ->increment('used_capacity', 1);
+        });
+        
         return $this->success($booking, 'Booking Created Successfuly', 201);
     }
 

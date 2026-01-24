@@ -38,7 +38,7 @@ class CourseClassController extends ApiController
             'name' => 'sometimes|string',
             'image_url' => 'sometimes|string',
             'description' => 'sometimes|string',
-            'class_capacity' => 'sometimes|integer'
+            'class_capacity' => 'sometimes|integer',
             'is_active' => 'sometimes|boolean'
         ]);
         
