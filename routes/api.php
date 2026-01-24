@@ -7,6 +7,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\TrainerController;
+use App\Http\Controllers\OrderController;
 
 //LOGIN
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -24,3 +25,5 @@ Route::apiResource('user-management', UserManagementController::class);
 Route::apiResource('package', PackageController::class);
 Route::apiResource('course-class', CourseClassController::class);
 Route::apiResource('trainer', TrainerController::class);
+Route::apiResource('order', OrderController::class);
+
