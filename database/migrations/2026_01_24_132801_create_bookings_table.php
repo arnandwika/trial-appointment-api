@@ -21,7 +21,7 @@ return new class extends Migration
             $table->dateTime('booking_datetime');
             $table->string('status');
             $table->boolean('is_active')->default(true);
-            $table->timestamps;
+            $table->timestamps();
         });
     }
 
