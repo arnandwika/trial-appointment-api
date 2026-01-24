@@ -26,25 +26,40 @@ class OrderController extends ApiController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-         DB::beginTransaction();
-         try {
+   public function store(Request $request)
+{
+    $data = $request->validate([
+        'user_id'                       => 'required|integer',
+        'user_name'                     => 'required|string',
+        'total_amount'                  => 'required|numeric|min:0',
+
+        'order_details'                 => 'required|array|min:1',
+        'order_details.*.package_id'    => 'required|integer',
+        'order_details.*.class_id'      => 'required|integer',
+        'order_details.*.package_name'  => 'required|string',
+        'order_details.*.class_name'    => 'required|string',
+        'order_details.*.total_quota'   => 'required|integer|min:1',
+        'order_details.*.used_quota'    => 'nullable|integer|min:0',
+    ]);
+
+    DB::beginTransaction();
+
+    try {
         // Generate Order No
         $orderNo = $this->generateOrderNo();
 
         // Create Order
         $order = Order::create([
-            'user_id'      => $request->user_id,
-            'user_name'    => $request->user_name,
+            'user_id'      => $data['user_id'],
+            'user_name'    => $data['user_name'],
             'order_no'     => $orderNo,
-            'total_amount' => $request->total_amount,
+            'total_amount' => $data['total_amount'],
             'order_date'   => now(),
             'status'       => 'active',
         ]);
 
         // Create Order Details
-        foreach ($request->order_details as $detail) {
+        foreach ($data['order_details'] as $detail) {
             OrderDetail::create([
                 'order_id'        => $order->id,
                 'package_id'      => $detail['package_id'],
@@ -73,11 +88,9 @@ class OrderController extends ApiController
             500
         );
     }
-    }
+}
 
-    /**
-     * Display the specified resource.
-     */
+
    public function myTransaction($userId)
 {
     try {

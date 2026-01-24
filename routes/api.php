@@ -25,6 +25,6 @@ Route::apiResource('user-management', UserManagementController::class);
 Route::apiResource('package', PackageController::class);
 Route::apiResource('course-class', CourseClassController::class);
 Route::apiResource('trainer', TrainerController::class);
-Route::apiResource('order', OrderController::class);
+Route::apiResource('orders', OrderController::class);
 Route::get('orders/my-transaction/{userId}', [OrderController::class, 'myTransaction']);
 
