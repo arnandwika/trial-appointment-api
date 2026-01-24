@@ -20,6 +20,7 @@ class Schedule extends Model
         'class_id',
         'trainer_id',
         'datetime_schedule',
+        'used_capacity',
         'is_active'
     ];
 

@@ -19,7 +19,8 @@ class ScheduleController extends ApiController
         $data = $request->validate([
             'class_id' => 'required|integer|exists:classes,id',
             'trainer_id' => 'required|integer|exists:trainers,id',
-            'datetime_schedule' => 'required|date'
+            'datetime_schedule' => 'required|date',
+            'used_capacity' => 'required|integer'
         ]);
 
         $schedule = Schedule::create($data);
@@ -37,6 +38,7 @@ class ScheduleController extends ApiController
             'class_id' => 'sometimes|integer|exists:course_classes,id',
             'trainer_id' => 'sometimes|integer|exists:trainers,id',
             'datetime_schedule' => 'sometimes|date',
+            'used_capacity' => 'sometimes|integer',
             'is_active' => 'sometimes|boolean'
         ]);
 
