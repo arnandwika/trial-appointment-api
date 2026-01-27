@@ -9,6 +9,8 @@ class Schedule extends Model
 {
     use HasFactory;
 
+    protected $table = 'schedules';
+
     protected static function booted()
     {
         static::addGlobalScope('active', function (Builder $builder) {
