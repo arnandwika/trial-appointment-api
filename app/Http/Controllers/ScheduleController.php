@@ -10,7 +10,7 @@ class ScheduleController extends ApiController
     public function index()
     {
         return $this->success(
-            Schedule::all()
+            Schedule::with(['courseClass', 'trainer'])->get()
         );
     }
 

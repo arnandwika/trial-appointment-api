@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\CourseClass;
+use App\Models\Trainer;
 
 class Schedule extends Model
 {
@@ -30,4 +32,14 @@ class Schedule extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function courseClass()
+    {
+        return $this->belongsTo(CourseClass::class, 'class_id');
+    }
+
+    public function trainer()
+    {
+        return $this->belongsTo(Trainer::class, 'trainer_id');
+    }
 }
