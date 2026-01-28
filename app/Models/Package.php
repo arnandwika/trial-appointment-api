@@ -30,4 +30,9 @@ class Package extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function courseClass()
+    {
+        return $this->belongsTo(CourseClass::class, 'class_id');
+    }
 }

@@ -10,7 +10,7 @@ class PackageController extends ApiController
     public function index()
     {
         return $this->success(
-            Package::all()
+            Package::with('courseClass')->get()
         );
     }
 
@@ -43,11 +43,11 @@ class PackageController extends ApiController
             'price' => 'sometimes|numeric|min:0',
             'is_active' => 'sometimes|boolean'
         ]);
-        
+
         if (empty($data)) {
             return $this->error(null, 'No Package to update', 422);
         }
-        
+
         $package->update($data);
         return $this->success($package, 'Package Updated Successfully', 200);
     }
