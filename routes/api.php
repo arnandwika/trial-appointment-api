@@ -9,6 +9,7 @@ use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\BookingController;
 
 //LOGIN
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -27,6 +28,7 @@ Route::apiResource('package', PackageController::class);
 Route::apiResource('course-class', CourseClassController::class);
 Route::apiResource('trainer', TrainerController::class);
 Route::apiResource('orders', OrderController::class);
-Route::apiResource('schedules', ScheduleController::class);
+Route::apiResource('schedule', ScheduleController::class);
+Route::apiResource('booking', BookingController::class);
 Route::get('orders/my-transaction/{userId}', [OrderController::class, 'myTransaction']);
 
