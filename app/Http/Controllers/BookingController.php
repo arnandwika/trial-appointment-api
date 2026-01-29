@@ -24,7 +24,7 @@ class BookingController extends Controller
             'trainer_id' => 'required|integer|exists:trainers,id',
             'schedule_id' => 'required|integer|exists:schedules,id',
             'booking_date' => 'required|date',
-            //'status' => 'required|string'
+            'status' => 'required|string'
         ]);
 
         DB::transaction(function () use ($data, &$booking) {
