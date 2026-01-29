@@ -24,7 +24,7 @@ class BookingController extends Controller
             'trainer_id' => 'required|integer|exists:trainers,id',
             'schedule_id' => 'required|integer|exists:schedules,id',
             'booking_date' => 'required|date',
-            'status' => 'required|string'
+            //'status' => 'required|string'
         ]);
 
         DB::transaction(function () use ($data, &$booking) {
@@ -59,7 +59,7 @@ class BookingController extends Controller
                 ->where('id', $data['schedule_id'])
                 ->increment('used_capacity', 1);
         });
-        
+
         return $this->success($booking, 'Booking Created Successfuly', 201);
     }
 
@@ -80,11 +80,11 @@ class BookingController extends Controller
             'status' => 'sometimes|string',
             'is_active' => 'sometimes|boolean'
         ]);
-        
+
         if (empty($data)) {
             return $this->error(null, 'No Booking to update', 422);
         }
-        
+
         $booking->update($data);
         return $this->success($booking, 'Booking Updated Successfully', 200);
     }
