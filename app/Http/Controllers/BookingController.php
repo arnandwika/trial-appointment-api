@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\OrderDetail;
+use App\Models\Schedule;
+use App\Models\CourseClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class BookingController extends ApiController
 {
@@ -37,13 +41,12 @@ class BookingController extends ApiController
             if ($orderDetail->used_quota >= $orderDetail->total_quota) {
                 abort(422, 'Quota exhausted');
             }
-
-            $schedule = DB::table('schedules')
-                ->where('id', $data['schedule_id'])
+            
+            $schedule = Schedule::with('courseClass')
                 ->lockForUpdate()
-                ->first();
+                ->find($data['schedule_id']);
 
-            if ($schedule->used_capacity >= $schedule->capacity) {
+           if ($schedule->used_capacity >= $schedule->courseClass->class_capacity) {
                 abort(422, 'Schedule is full');
             }
 
