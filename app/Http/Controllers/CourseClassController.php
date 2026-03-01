@@ -43,7 +43,7 @@ class CourseClassController extends ApiController
     {
         $data = $request->validate([
             'name' => 'sometimes|string',
-            'image_file' => 'sometimes|file|image|mimes:jpg,jpeg,png|max:5048'
+            'image_file' => 'sometimes|file|image|mimes:jpg,jpeg,png|max:5048',
             'description' => 'sometimes|string',
             'class_capacity' => 'sometimes|integer',
             'is_active' => 'sometimes|boolean'
