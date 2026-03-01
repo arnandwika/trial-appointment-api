@@ -17,14 +17,28 @@ class ScheduleController extends ApiController
     public function store(Request $request)
     {
         $data = $request->validate([
-            'class_id' => 'required|integer|exists:classes,id',
+            'class_id' => 'required|integer|exists:course_classes,id',
             'trainer_id' => 'required|integer|exists:trainers,id',
-            'datetime_schedule' => 'required|date',
-            'used_capacity' => 'required|integer'
+            'datetime_schedule' => 'required|array|min:1',
+            'datetime_schedule.*' => 'required|date'
         ]);
 
-        $schedule = Schedule::create($data);
-        return $this->success($schedule, 'Schedule Created Successfuly', 201);
+        $insertData = [];
+
+        foreach ($data['datetime_schedule'] as $date) {
+            $insertData[] = [
+                'class_id' => $data['class_id'],
+                'trainer_id' => $data['trainer_id'],
+                'datetime_schedule' => $date,
+                'used_capacity' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        Schedule::insert($insertData);
+
+        return $this->success($insertData, 'Schedules Created Successfully', 201);
     }
 
     public function show(Schedule $schedule)

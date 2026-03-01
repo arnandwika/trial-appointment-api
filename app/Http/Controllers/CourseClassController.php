@@ -18,7 +18,7 @@ class CourseClassController extends ApiController
     {
         $data = $request->validate([
             'name' => 'required|string',
-            'image_url' => 'nullable|string',
+            'image_file' => 'nullable|string',
             'description' => 'required|string',
             'class_capacity' => 'required|integer'
         ]);
@@ -36,11 +36,16 @@ class CourseClassController extends ApiController
     {
         $data = $request->validate([
             'name' => 'sometimes|string',
-            'image_url' => 'sometimes|string',
+            'image_file' => 'sometimes|string',
             'description' => 'sometimes|string',
             'class_capacity' => 'sometimes|integer',
             'is_active' => 'sometimes|boolean'
         ]);
+
+        if (isset($data['image_file'])) {
+            $data['image_url'] = $data['image_file'];
+            unset($data['image_file']);
+        }
         
         $courseClass->update($data);
         return $this->success($courseClass, 'Class Updated Successfully', 200);
