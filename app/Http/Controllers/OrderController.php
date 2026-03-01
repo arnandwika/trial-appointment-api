@@ -15,7 +15,7 @@ class OrderController extends ApiController
     public function index()
     {
         return $this->success(
-            Package::with('courseClass')->get()
+            Order::all()
         );
     }
 
