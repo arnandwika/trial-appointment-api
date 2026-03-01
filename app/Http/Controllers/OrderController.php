@@ -56,7 +56,7 @@ class OrderController extends ApiController
                 'order_no'     => $orderNo,
                 'total_amount' => $data['total_amount'],
                 'order_date'   => now(),
-                'status'       => 'active',
+                'status'       => 'inactive',
             ]);
 
             // Create Order Details
@@ -135,7 +135,31 @@ class OrderController extends ApiController
      */
     public function update(Request $request, Order $order)
     {
-        //
+    try {
+
+        if ($order->status === 'active') {
+            return $this->error(
+                'Order sudah active',
+                400
+            );
+        }
+
+        $order->update([
+            'status' => 'active'
+        ]);
+
+        return $this->success(
+            $order,
+            'Order berhasil di activekan',
+            200
+        );
+
+    } catch (\Exception $e) {
+            return $this->error(
+                $e->getMessage(),
+                500
+            );
+        }
     }
 
     /**
