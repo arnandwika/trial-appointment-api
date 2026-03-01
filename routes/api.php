@@ -10,6 +10,7 @@ use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DashboardController;
 
 //LOGIN
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -30,5 +31,6 @@ Route::apiResource('trainer', TrainerController::class);
 Route::apiResource('orders', OrderController::class);
 Route::apiResource('schedule', ScheduleController::class);
 Route::apiResource('booking', BookingController::class);
+Route::apiResource('dashboard', DashboardController::class);
 Route::get('orders/my-transaction/{userId}', [OrderController::class, 'myTransaction']);
 
