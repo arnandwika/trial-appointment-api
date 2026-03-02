@@ -29,4 +29,9 @@ class Trainer extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function courseClasses()
+    {
+        return $this->hasMany(CourseClass::class, 'trainer_id');
+    }
 }

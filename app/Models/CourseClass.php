@@ -28,4 +28,9 @@ class CourseClass extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function trainer()
+    {
+        return $this->belongsTo(Trainer::class, 'trainer_id');
+    }
 }

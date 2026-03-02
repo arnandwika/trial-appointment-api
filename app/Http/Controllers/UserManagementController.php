@@ -16,7 +16,7 @@ class UserManagementController extends ApiController
         );
     }
 
- public function store(Request $request)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'role' => 'required|string',
@@ -98,6 +98,11 @@ class UserManagementController extends ApiController
         $request->user()->currentAccessToken()->delete();
 
         return $this->success(null, 'Logout Successful');
+    }
+
+    public function show(UserManagement $userManagement)
+    {
+        return $this->success($userManagement);
     }
 }
 
