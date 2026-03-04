@@ -10,7 +10,7 @@ class TrainerController extends ApiController
     public function index()
     {
         return $this->success(
-            $trainers = Trainer::with('courseClasses')->get()
+            Trainer::with('courseClasses')->get()
         );
     }
 
