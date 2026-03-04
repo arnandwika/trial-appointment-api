@@ -32,6 +32,6 @@ class Trainer extends Model
 
     public function courseClasses()
     {
-        return $this->hasMany(CourseClass::class, 'trainer_id');
+        return $this->hasMany(CourseClass::class, 'class_id');
     }
 }
