@@ -35,8 +35,11 @@ class DashboardController extends ApiController
                                     'class_name' => $schedule->courseClass->name,
                                     'trainer_name' => $schedule->trainer->name,
                                     'datetime_schedule' => $schedule->datetime_schedule,
+                                     'class_capacity' =>
+                                    $schedule->courseClass->class_capacity,
                                     'remaining_slot' =>
                                         $schedule->courseClass->class_capacity - $schedule->used_capacity
+                                   
                                 ];
                             });
             // 🧾 2 ORDER TERAKHIR

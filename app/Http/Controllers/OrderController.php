@@ -6,6 +6,9 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\OrderReportExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class OrderController extends ApiController
 {
@@ -188,4 +191,23 @@ class OrderController extends ApiController
 
         return $prefix . $date . $newNumber;
     }
+
+    public function exportExcel(Request $request)
+{
+    $request->validate([
+        'date' => 'required|array|size:2',
+        'date.*' => 'required|date'
+    ]);
+
+    $startDate = Carbon::parse($request->date[0])->startOfDay();
+    $endDate   = Carbon::parse($request->date[1])->endOfDay();
+
+    $fileName = 'order_report_' . now()->format('Ymd_His') . '.xlsx';
+
+    return Excel::download(
+        new OrderReportExport($startDate, $endDate),
+        $fileName
+    );
+}
+    
 }

@@ -33,4 +33,5 @@ Route::apiResource('schedule', ScheduleController::class);
 Route::apiResource('booking', BookingController::class);
 Route::apiResource('dashboard', DashboardController::class);
 Route::get('orders/my-transaction/{userId}', [OrderController::class, 'myTransaction']);
+Route::get('orders/report/excel', [OrderController::class, 'exportExcel']);
 
