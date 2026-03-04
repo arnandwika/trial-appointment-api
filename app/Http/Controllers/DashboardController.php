@@ -21,11 +21,24 @@ class DashboardController extends ApiController
             $activeOrders     = Order::where('status', 'active')->count();
 
             // 📅 2 SCHEDULE TERDEKAT
-            $upcomingSchedules = Schedule::whereDate('datetime_schedule', '>=', now())
-                ->orderBy('datetime_schedule', 'asc')
-                ->take(2)
-                ->get();
-
+          $upcomingSchedules = Schedule::with([
+        'courseClass:id,name,class_capacity',
+        'trainer:id,name'
+                            ])
+                            ->where('datetime_schedule', '>=', now())
+                            ->orderBy('datetime_schedule', 'asc')
+                            ->take(2)
+                            ->get()
+                            ->map(function ($schedule) {
+                                return [
+                                    'id' => $schedule->id,
+                                    'class_name' => $schedule->courseClass->name,
+                                    'trainer_name' => $schedule->trainer->name,
+                                    'datetime_schedule' => $schedule->datetime_schedule,
+                                    'remaining_slot' =>
+                                        $schedule->courseClass->class_capacity - $schedule->used_capacity
+                                ];
+                            });
             // 🧾 2 ORDER TERAKHIR
             $recentOrders = Order::with('orderDetails')
                 ->latest()
