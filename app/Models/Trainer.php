@@ -30,6 +30,7 @@ class Trainer extends Model
         'is_active' => 'boolean',
     ];
 
+    //koww
     public function courseClasses()
     {
         return $this->hasMany(CourseClass::class, 'class_id');
