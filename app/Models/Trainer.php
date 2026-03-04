@@ -33,6 +33,6 @@ class Trainer extends Model
     //koww
     public function courseClasses()
     {
-        return $this->hasMany(CourseClass::class, 'class_id');
+        return $this->belongsTo(CourseClass::class, 'class_id');
     }
 }
