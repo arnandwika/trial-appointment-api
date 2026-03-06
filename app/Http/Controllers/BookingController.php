@@ -104,11 +104,9 @@ class BookingController extends ApiController
             'schedule_id' => 'required|integer'
         ]);
 
-        return $this->success(
-            $bookings = Booking::with('user')
+        $bookings = Booking::with('userManagement')
             ->where('schedule_id', $request->schedule_id)
-            ->get()
-        );
+            ->get();
 
         return $this->success($bookings);
     }

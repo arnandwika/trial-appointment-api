@@ -32,9 +32,9 @@ class Booking extends Model
         'is_active' => 'boolean',
     ];
 
-    public function user(): BelongsTo
+    public function userManagement()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
+        return $this->belongsTo(UserManagement::class, 'user_id');
     }
 
     public function schedule()
