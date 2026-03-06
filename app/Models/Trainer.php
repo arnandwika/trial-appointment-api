@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\courseClasses;
 
 class Trainer extends Model
 {
@@ -30,7 +31,6 @@ class Trainer extends Model
         'is_active' => 'boolean',
     ];
 
-    //koww
     public function courseClasses()
     {
         return $this->belongsTo(CourseClass::class, 'class_id');
