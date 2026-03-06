@@ -30,6 +30,9 @@ COPY . .
 # Install dependencies
 RUN composer install --optimize-autoloader --no-interaction
 
+# Link storage
+RUN php artisan storage:link || true
+
 # Set correct permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
