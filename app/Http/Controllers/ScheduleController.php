@@ -69,4 +69,11 @@ class ScheduleController extends ApiController
         $schedule->update(['is_active' => false]);
         return response()->noContent();
     }
+
+    public function detailSchedule(Schedule $schedule)
+    {
+        return $this->success(
+            $schedule->load(['courseClass', 'trainer'])
+        );
+    }
 }

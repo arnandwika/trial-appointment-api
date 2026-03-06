@@ -97,4 +97,19 @@ class BookingController extends ApiController
         $booking->update(['is_active' => false]);
         return response()->noContent();
     }
+
+    public function bookingDetails(Request $request)
+    {
+        $request->validate([
+            'schedule_id' => 'required|integer'
+        ]);
+
+        return $this->success(
+            $bookings = Booking::with('user')
+            ->where('schedule_id', $request->schedule_id)
+            ->get()
+        );
+
+        return $this->success($bookings);
+    }
 }
