@@ -117,7 +117,7 @@ class BookingController extends ApiController
             'user_id' => 'required|integer'
         ]);
 
-        $bookings = Booking::with('schedule.trainer', 'schedule.class')
+        $bookings = Booking::with('schedule.trainer', 'schedule.courseClass')
             ->where('user_id', $request->user_id)
             ->get();
 
