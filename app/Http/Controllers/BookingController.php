@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\OrderDetail;
 use App\Models\Schedule;
 use App\Models\CourseClass;
+use App\Models\UserManagement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -100,27 +101,47 @@ class BookingController extends ApiController
 
     public function bookingDetails(Request $request)
     {
-        $request->validate([
-            'schedule_id' => 'required|integer'
-        ]);
+        try {
+            $request->validate([
+                'schedule_id' => 'required|integer'
+            ]);
 
-        $bookings = Booking::with('userManagement')
-            ->where('schedule_id', $request->schedule_id)
-            ->get();
+            $bookings = Booking::with('userManagement')
+                ->where('schedule_id', $request->schedule_id)
+                ->get();
 
-        return $this->success($bookings);
+            return $this->success($bookings);
+        } catch (\Throwable $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ], 500);
+
+        }
     }
 
     public function myBooking(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|integer'
-        ]);
+        try {
+            $request->validate([
+                'user_id' => 'required|integer'
+            ]);
 
-        $bookings = Booking::with('schedule.trainer', 'schedule.courseClass')
-            ->where('user_id', $request->user_id)
-            ->get();
+            $bookings = Booking::with('schedule.trainer', 'schedule.courseClass')
+                ->where('user_id', $request->user_id)
+                ->get();
 
-        return $this->success($bookings);
+            return $this->success($bookings);
+        } catch (\Throwable $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ], 500);
+
+        }
     }
 }
