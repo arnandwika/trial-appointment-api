@@ -23,6 +23,14 @@ Route::prefix('auth')->group(function () {
         ->middleware('auth:sanctum');
 });
 
+//CUSTOM API's
+Route::get('orders/my-transaction/{userId}', [OrderController::class, 'myTransaction']);
+Route::get('orders/report/excel', [OrderController::class, 'exportExcel']);
+Route::prefix('booking')->group(function () {
+    Route::get('/details', [BookingController::class, 'bookingDetails']);
+    Route::get('/mine', [BookingController::class, 'myBooking']);
+});
+
 //API's
 Route::apiResource('user-management', UserManagementController::class);
 Route::apiResource('package', PackageController::class);
@@ -32,11 +40,3 @@ Route::apiResource('orders', OrderController::class);
 Route::apiResource('schedule', ScheduleController::class);
 Route::apiResource('booking', BookingController::class);
 Route::apiResource('dashboard', DashboardController::class);
-
-//CUSTOM API's
-Route::get('orders/my-transaction/{userId}', [OrderController::class, 'myTransaction']);
-Route::get('orders/report/excel', [OrderController::class, 'exportExcel']);
-Route::prefix('booking')->group(function () {
-    Route::get('/details', [BookingController::class, 'bookingDetails']);
-    Route::get('/mine', [BookingController::class, 'myBooking']);
-});
