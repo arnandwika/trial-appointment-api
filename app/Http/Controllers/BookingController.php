@@ -110,4 +110,17 @@ class BookingController extends ApiController
 
         return $this->success($bookings);
     }
+
+    public function myBooking(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|integer'
+        ]);
+
+        $bookings = Booking::with('schedule.trainer', 'schedule.class')
+            ->where('user_id', $request->user_id)
+            ->get();
+
+        return $this->success($bookings);
+    }
 }
