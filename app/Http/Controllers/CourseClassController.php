@@ -30,7 +30,7 @@ class CourseClassController extends ApiController
         unset($data['image_file']);
 
         $courseClass = CourseClass::create($data);
-        
+
         return $this->success($courseClass, 'Class Created Successfuly', 201);
     }
 
@@ -52,8 +52,8 @@ class CourseClassController extends ApiController
         if ($request->hasFile('image_file')) {
 
             // Optional: delete old image
-            if ($courseClass->image_url) {
-                Storage::disk('public')->delete($courseClass->image_url);
+            if ($request->previous_image_url) {
+                Storage::disk('public')->delete($request->previous_image_url);
             }
 
             // Store new file
@@ -63,7 +63,7 @@ class CourseClassController extends ApiController
             $data['image_url'] = $path;
             unset($data['image_file']);
         }
-        
+
         $courseClass->update($data);
 
         return $this->success($courseClass, 'Class Updated Successfully', 200);
