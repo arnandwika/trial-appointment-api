@@ -77,11 +77,11 @@ class UserManagementController extends ApiController
         $userManagement = UserManagement::where('email', $data['email'])->first();
 
         if (!$userManagement || !Hash::check($data['password'], $userManagement->password)) {
-            return $this->error('Email atau password salah', 401);
+            return $this->error('Email or password is incorrect', 401);
         }
 
         if (!$userManagement->is_active) {
-            return $this->error('Akun tidak aktif', 403);
+            return $this->error('Account is inactive', 403);
         }
 
         $token = $userManagement->createToken('auth_token')->plainTextToken;
@@ -106,5 +106,5 @@ class UserManagementController extends ApiController
     }
 }
 
-    
+
 
