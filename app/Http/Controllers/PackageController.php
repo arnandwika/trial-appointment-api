@@ -43,6 +43,7 @@ class PackageController extends ApiController
             'description' => 'sometimes|string',
             'quota' => 'sometimes|integer',
             'price' => 'sometimes|numeric|min:0',
+            'valid_days' => 'required|integer',
             'is_active' => 'sometimes|boolean'
         ]);
 
