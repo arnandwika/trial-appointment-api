@@ -40,7 +40,9 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 EXPOSE 8000
 
 # Start Laravel
+CMD php artisan route:migrate
 CMD php artisan route:clear
 CMD php artisan cache:clear
 CMD php artisan config:cache
 CMD php artisan serve --host=0.0.0.0 --port=${PORT}
+

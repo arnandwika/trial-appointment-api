@@ -23,6 +23,7 @@ class OrderDetail extends Model
         'total_quota',
         'remaining_quota',
         'used_quota',
+        'valid_until'
     ];
 
     protected $casts = [
