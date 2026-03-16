@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exports\OrderReportExport;
@@ -138,7 +139,7 @@ class OrderController extends ApiController
      */
     public function update(Request $request, Order $order)
     {
-    try {
+     try {
 
         if ($order->status === 'active') {
             return $this->error(
@@ -147,9 +148,30 @@ class OrderController extends ApiController
             );
         }
 
+        // ubah status order
         $order->update([
             'status' => 'active'
         ]);
+
+        // ambil semua order detail berdasarkan order_id
+        $orderDetails = OrderDetail::where('order_id', $order->id)->get();
+
+        foreach ($orderDetails as $detail) {
+
+            // ambil package berdasarkan package_id
+            $package = Package::find($detail->package_id);
+
+            if ($package) {
+
+                // hitung valid_until
+                $validUntil = Carbon::now()->addDays($package->valid_days);
+
+                // update order_detail
+                $detail->update([
+                    'valid_until' => $validUntil
+                ]);
+            }
+        }
 
         return $this->success(
             $order,
@@ -158,11 +180,11 @@ class OrderController extends ApiController
         );
 
     } catch (\Exception $e) {
-            return $this->error(
-                $e->getMessage(),
-                500
-            );
-        }
+        return $this->error(
+            $e->getMessage(),
+            500
+        );
+    }
     }
 
     /**

@@ -25,7 +25,8 @@ class Package extends Model
         'description',
         'quota',
         'price',
-        'is_active'
+        'is_active',
+        'valid_days'
     ];
 
     protected $casts = [

@@ -21,7 +21,9 @@ class PackageController extends ApiController
             'title' => 'required|string',
             'description' => 'required|string',
             'quota' => 'required|integer',
-            'price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0',
+            'valid_days' => 'required|integer'
+
         ]);
 
         $package = Package::create($data);
