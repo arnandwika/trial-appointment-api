@@ -62,6 +62,10 @@ class BookingController extends ApiController
             DB::table('schedules')
                 ->where('id', $data['schedule_id'])
                 ->increment('used_capacity', 1);
+
+            DB::table('order_details')
+                ->where('id', $data['order_detail_id'])
+                ->decrement('remaining_quota', 1);
         });
 
         return $this->success($booking, 'Booking Created Successfuly', 201);
@@ -95,7 +99,22 @@ class BookingController extends ApiController
 
     public function destroy(Booking $booking)
     {
-        $booking->update(['is_active' => false]);
+        DB::transaction(function () use ($booking) {
+            $booking->update(['is_active' => false]);
+            
+            DB::table('order_details')
+                ->where('id', $booking->order_detail_id)
+                ->decrement('used_quota', 1);
+
+            DB::table('schedules')
+                ->where('id', $booking->schedule_id)
+                ->decrement('used_capacity', 1);
+
+            DB::table('order_details')
+                ->where('id', $booking->order_detail_id)
+                ->increment('remaining_quota', 1);
+        });
+        
         return response()->noContent();
     }
 
